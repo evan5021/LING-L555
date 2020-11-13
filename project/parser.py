@@ -21,54 +21,24 @@ class Parser:
 			p.begin_lexical_rules()
 		elif(value == 'help'):
 			p.help()
-#			p.welcome_screen()
 		elif(value == 'pparse'):
 			p.parse_POS()
 		elif(value == 'end'):
 			p.end_screen()
 		elif(value == 'parse'):
 			p.parse()
-#			p.welcome_screen()
 		elif(value == 'savesyn'):
-#			f = open('saved_syn.txt', 'wb')
-#			pickle.dump(self.syntax, f)
-#			f.close
-#			p.welcome_screen()
 			p.save_syn()
-#			p.welcome_screen()
 		elif(value == 'loadsyn'):
-#			f = open('saved_syn.txt', 'rb')
-#			self.syntax = pickle.load(f)
-#			f.close
-#			print('Loaded following syntax:\n')
-#			p.view_syntactical_rules()
-#			print()
-#			p.welcome_screen()
 			p.load_syn()
-#			p.welcome_screen()
 		elif(value == 'savelex'):
-#			f = open('saved_lex.txt', 'wb')
-#			pickle.dump(self.lexicon, f)
-#			f.close
-#			p.welcome_screen()
 			p.save_lex()
-#			p.welcome_screen()
 		elif(value == 'loadlex'):
-#			f = open('saved_lex.txt', 'rb')
-#			self.lexicon = pickle.load(f)
-#			f.close
-#			print('Loaded following lexicon:\n')
-#			p.view_lexical_rules()
-#			print()
-#			p.welcome_screen()
 			p.load_lex()
-#			p.welcome_screen()
 		elif(value == 'deletelex'):
 			p.delete_lex()
-#			p.welcome_screen()
 		elif(value == 'deletesyn'):
 			p.delete_syn()
-#			p.welcome_screen()
 		elif(value == 'load'):
 			p.load_syn()
 			p.load_lex()
@@ -79,7 +49,7 @@ class Parser:
 			p.change_head()
 		elif(value == 'syn'):
 			p.begin_syntactic_rules()
-		elif(value == ' view'):
+		elif(value == 'view'):
 			p.view_lexical_rules()
 			p.view_syntactic_rules()
 		else:
@@ -88,7 +58,7 @@ class Parser:
 		p.welcome_screen()
 			
 	def help(self):
-		print('To begin writing lexical rules, please enter \'lex\'\nTo try and parse a sentence with lexical rules, please enter \'pparse\'\nTo save lexical rules, please enter \'savelex\'\nTo load lexical rules, please enter \'loadlex\'\nTo save syntactic rules, please enter \'savesyn\'\nTo load a syntactic rules, please enter \'loadsyn\'\nTo end the program, please enter\'end\'\nTo begin writing syntactic rules, please enter \'syn\'\nTo change the head, please enter \'head\'\nTo load all, please enter \'load\'\nTo save all, please enter \'save\'\nTo delete current lexical entries, please enter \'deletelex\'\nTo delete current syntactic entries, please enter \'deletesyn\'\nTo parse, please enter \'parse\'\nTo view all rules, please enter \'view\'\n')
+		print('To begin writing lexical rules, please enter \'lex\'\nTo try and parse a sentence with lexical rules, please enter \'pparse\'\nTo save lexical rules, please enter \'savelex\'\nTo load lexical rules, please enter \'loadlex\'\nTo save syntactic rules, please enter \'savesyn\'\nTo load a syntactic rules, please enter \'loadsyn\'\nTo end the program, please enter \'end\'\nTo begin writing syntactic rules, please enter \'syn\'\nTo change the head, please enter \'head\'\nTo load all, please enter \'load\'\nTo save all, please enter \'save\'\nTo delete current lexical entries, please enter \'deletelex\'\nTo delete current syntactic entries, please enter \'deletesyn\'\nTo parse, please enter \'parse\'\nTo view all rules, please enter \'view\'\n')
 	def load_syn(self):
 		f = open('saved_syn.txt', 'rb')
 		self.syntax = pickle.load(f)
@@ -126,7 +96,6 @@ class Parser:
 	def begin_lexical_rules(self):
 		value = input('If you would like to go back enter \'leave\' if you would like to view all lexical rules, enter \'view\', otherwise press enter\n')
 		if value == 'leave':
-#			p.welcome_screen()
 			pass
 		elif value == 'view':
 			p.view_lexical_rules()
@@ -142,10 +111,9 @@ class Parser:
 			print(key + " has part of speech " + value)
 
 	def view_syntactic_rules(self):
-		print(len(self.syntax))
 		for key, value in self.syntax.items():
-			print(key + ' has daughters ', end='')
-			for item in value:
+			print(value + ' has daughters ', end='')
+			for item in key:
 				print(item + ' ', end='')
 			print()
 
@@ -156,7 +124,6 @@ class Parser:
 			POS = self.lexicon[item]
 			print(POS + '(' + item + ') ', end='')
 		print('\nFinished')
-#		p.welcome_screen()
 
 	def parse(self):
 		value = input('Please enter the sentence you wish to be parsed:\n')
@@ -172,7 +139,6 @@ class Parser:
 	def begin_syntactic_rules(self):
 		value = input('If you would like to go back enter \'leave\' if you would like to view all syntactic rules, enter \'view\', otherwise press enter\n')
 		if value == 'leave':
-#			p.welcome_screen()
 			pass
 		elif value == 'view':
 			p.view_syntactic_rules()
@@ -180,8 +146,7 @@ class Parser:
 		else:
 			value1 = input('Please enter mother:\n')
 			value2 = input('Please enter daughters:\n')
-			self.syntax[value1] = value2.split(' ')
-			print(self.syntax)
+			self.syntax[tuple(value2.split(' '))] = value1
 			p.begin_syntactic_rules()
 			
 	def find_POS(self, str):
